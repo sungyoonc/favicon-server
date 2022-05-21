@@ -1,6 +1,7 @@
 const path = require('path')
 let express = require('express')
 let app = express()
+let psl = require('psl')
 // let router = express.Router()
 // let favicon = require('serve-favicon')
 
@@ -21,14 +22,20 @@ let app = express()
 app.use(express.static(path.join(__dirname, 'svg')))
 app.set('view engine', 'ejs')
 
-app.get('/favicon/:filename', (req, res) => {
-  if (req.params.filename.indexOf('\0') !== -1) {
+app.get('/', (req, res) => {
+
+  if (req.hostname.indexOf('\0') !== -1) {
     res.status(404).json({})
   }
-  res.status(200).render('favicon', { filename: req.params.filename })
+  let parsed = psl.parse(req.hostname)
+  if (parsed.subdomain === null) {
+    return res.status(200).json({})
+  }
+  let hostname = parsed.subdomain.split('.')
+  res.status(200).render('favicon', { filename: hostname[hostname.length - 1]})
 })
 
-var port = process.env.PORT || 4328 // 사용할 포트 번호를 port 변수에 넣습니다.
+var port = process.env.PORT || 8080 // 사용할 포트 번호를 port 변수에 넣습니다.
 app.listen(port, function () {
   console.log('INFO:: Server started at http://localhost:' + port)
 })
