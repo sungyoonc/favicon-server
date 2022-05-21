@@ -28,7 +28,7 @@ app.get('/favicon/:filename', (req, res) => {
   res.status(200).render('favicon', { filename: req.params.filename })
 })
 
-var port = 4328 // 사용할 포트 번호를 port 변수에 넣습니다.
+var port = process.env.PORT || 4328 // 사용할 포트 번호를 port 변수에 넣습니다.
 app.listen(port, function () {
   console.log('INFO:: Server started at http://localhost:' + port)
 })
