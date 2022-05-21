@@ -19,7 +19,7 @@ let psl = require('psl')
 //   next()
 // })
 
-app.use(express.static(path.join(__dirname, 'svg')))
+app.use(express.static(path.join(__dirname, 'favicon')))
 app.set('view engine', 'ejs')
 
 app.get('/', (req, res) => {
@@ -29,7 +29,7 @@ app.get('/', (req, res) => {
   }
   let parsed = psl.parse(req.hostname)
   if (parsed.subdomain === null) {
-    return res.status(200).json({})
+    return res.status(200).render('favicon', { filename: 'burger'})
   }
   let hostname = parsed.subdomain.split('.')
   res.status(200).render('favicon', { filename: hostname[hostname.length - 1]})
