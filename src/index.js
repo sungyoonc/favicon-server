@@ -7,7 +7,7 @@ let logger = (req, res, next) => {
     console.info(
       `${new Date().toISOString()}: method=${req.method} path="${
         req.path
-      }" host=${req.hostname} ip=${req.ips} fwd=${req.ips} protocol=${
+      }" host=${req.hostname} ip=${req.ip} fwd=${req.ips} protocol=${
         req.protocol
       }`
     )
