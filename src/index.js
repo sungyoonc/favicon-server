@@ -7,10 +7,17 @@ let logger = (req, res, next) => {
     console.info(
       `${new Date().toISOString()}: method=${req.method} path="${
         req.path
-      }" host=${req.hostname} fwd=${req.ips} protocol=${req.protocol}`
+      }" host=${req.hostname} ip=${req.ips} fwd=${req.ips} protocol=${
+        req.protocol
+      }`
     )
   })
   next()
+}
+if ((process.env.TRUST_PROXY ?? '').toLowerCase() === 'true') {
+  app.enable('trust proxy')
+} else {
+  app.disable('trust proxy')
 }
 
 app.use(express.static(path.join(__dirname, 'favicon')))
