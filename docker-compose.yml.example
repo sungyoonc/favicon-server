@@ -1,0 +1,7 @@
+version: '3.7'
+services:
+  favicon-server:
+    image: ghcr.io/winterolym/favicon-server:latest
+    restart: unless-stopped
+    volumes:
+      - ./favicon:/usr/src/app/favicon:ro
